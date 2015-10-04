@@ -1,0 +1,35 @@
+#!/bin/bash
+###################################
+# docker-teamspeak /start script
+#
+# Authors: Eugene Krymov
+# Updated: Oct 04th, 2015
+###################################
+
+TS3_PATH=/opt/teamspeak3-server_linux-amd64
+VOLUME=/data
+
+# Checking if files exist to make sure we're backing up the database to data
+if [ ! -f $TS3_PATH/ts3server.sqlitedb ] && [ -f $VOLUME/ts3server.sqlitedb ]
+then
+    ln -s $VOLUME/ts3server.sqlitedb $TS3_PATH/ts3server.sqlitedb
+fi
+
+if [ -f $TS3_PATH/ts3server.sqlitedb ] && [ ! -f $VOLUME/ts3server.sqlitedb ]
+then
+    mv $TS3_PATH/ts3server.sqlitedb $VOLUME/ts3server.sqlitedb
+    ln -s $VOLUME/ts3server.sqlitedb $TS3_PATH/ts3server.sqlitedb
+fi
+
+if [ -f $TS3_PATH/ts3server.sqlitedb ] && [ -f $VOLUME/ts3server.sqlitedb ]
+then
+    rm $TS3_PATH/ts3server.sqlitedb
+    ln -s $VOLUME/ts3server.sqlitedb $TS3_PATH/ts3server.sqlitedb
+fi
+
+
+# Run the teamspeak server
+export LD_LIBRARY_PATH=$TS3_PATH
+cd $TS3_PATH
+./ts3server_linux_amd64 logpath=$VOLUME/logs/
+
