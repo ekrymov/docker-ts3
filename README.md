@@ -8,7 +8,7 @@ For more information on TeamSpeak and check out it's [website][1].
 ## Building docker-ts3
 
 Running this will build you a docker image with the latest version of both
-docker-teamspeak and TeamSpeak itself.
+docker-ts3 and TeamSpeak itself.
 
     git clone https://github.com/ekrymov/docker-ts3
     cd docker-ts3
@@ -24,9 +24,9 @@ system you can map the ports to 9987, 10011, 30033 and no proxy is needed. i.e.
 directory on your host machine is already created before running
 `mkdir -p /mnt/teamspeak`.
 
-    sudo docker run --name="TS3" --restart="always" -d -p=9987:9987/udp -p=10011:10011 -p=30033:30033 -v=/mnt/teamspeak:/data ekrymov/ts3:latest
+    sudo docker run --name TS3 -d -p=9987:9987/udp -p=10011:10011 -p=30033:30033 -v=/mnt/teamspeak:/data ekrymov/ts3:latest
 
-From now on when you start/stop docker-teamspeak you should use the container id
+From now on when you start/stop docker-ts3 you should use the container id
 with the following commands. To get your container id, after you initial run
 type `sudo docker ps` and it will show up on the left side followed by the image
 name which is `ekrymov/ts3:latest`.
