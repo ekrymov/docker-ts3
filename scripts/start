@@ -1,6 +1,6 @@
 #!/bin/bash
 ###################################
-# docker-teamspeak /start script
+# docker-ts3 /start script
 #
 # Authors: Eugene Krymov
 # Updated: Oct 04th, 2015
@@ -32,4 +32,3 @@ fi
 export LD_LIBRARY_PATH=$TS3_PATH
 cd $TS3_PATH
 ./ts3server_linux_amd64 logpath=$VOLUME/logs/
-
