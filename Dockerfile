@@ -1,33 +1,35 @@
 #################################################################
-# Ubuntu 14.04 with added Teamspeak 3 Server.
+# Ubuntu 16.04 with added Teamspeak 3 Server.
 # Uses SQLite Database on default.
 #
 # Builds a basic docker image that can run TeamSpeak
 # (http://teamspeak.com/).
 #
 # Authors: Eugene Krymov
-# Updated: Oct 04th, 2015
+# Updated: Dec 04th, 2016
 # Require: Docker (http://www.docker.io/)
 #################################################################
 
 # Base system is the LTS version of Ubuntu.
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 # Make sure we don't get notifications we can't answer during building.
 ENV DEBIAN_FRONTEND noninteractive
 
 ## Set some variables for override
 # Teamspeak Server version
-ENV TS_VERSION 3.0.11.4
+ENV TS_VERSION 3.0.13.6
 # Download Link of Teamspeak 3 Server
-ENV TS_URL http://dl.4players.de/ts/releases/${TS_VERSION}/teamspeak3-server_linux-amd64-${TS_VERSION}.tar.gz
+ENV TS_URL http://dl.4players.de/ts/releases/${TS_VERSION}/teamspeak3-server_linux_amd64-${TS_VERSION}.tar.bz2
 
 # Download and install everything from the repos.
-RUN apt-get --yes update; apt-get --yes upgrade
+RUN apt-get update; apt-get upgrade -y
+RUN apt-get install bzip2 -y
+RUN apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Download and install TeamSpeak 3
-ADD ${TS_URL} /opt/
-RUN cd /opt; tar -zxf teamspeak3-server_linux-amd64-3.*.tar.gz; rm teamspeak3-server_linux-amd64-3.*.tar.gz
+ADD ${TS_URL} /opt/ts3.tar.bz2
+RUN cd /opt; tar -jxf ts3.tar.bz2; rm ts3.tar.bz2
 
 # Load in all of our config files.
 ADD ./scripts/start /start

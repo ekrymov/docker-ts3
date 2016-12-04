@@ -3,10 +3,10 @@
 # docker-ts3 /start script
 #
 # Authors: Eugene Krymov
-# Updated: Oct 04th, 2015
+# Updated: Dec 04th, 2016
 ###################################
 
-TS3_PATH=/opt/teamspeak3-server_linux-amd64
+TS3_PATH=/opt/teamspeak3-server_linux_amd64
 VOLUME=/data
 
 # Checking if files exist to make sure we're backing up the database to data
@@ -31,4 +31,4 @@ fi
 # Run the teamspeak server
 export LD_LIBRARY_PATH=$TS3_PATH
 cd $TS3_PATH
-./ts3server_linux_amd64 logpath=$VOLUME/logs/
+./ts3server logpath=$VOLUME/logs/
